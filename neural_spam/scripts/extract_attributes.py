@@ -9,6 +9,16 @@ INDEX_IS_SPAM = 2
 IS_SPAM = "1"
 IS_NOT_SPAM = "0"
 
+class EmailAttributes:
+	def __init__(self, subject):
+		self.subject = subject
+
+	def get_subject(self):
+		return self.subject
+
+	def __str__(self):
+		return "" + self.subject
+
 def args_treatment(args):
 	if len(args) != 3:
 		print "Numero incorreto de argumentos!!!"
@@ -25,14 +35,23 @@ def args_treatment(args):
 		exit()
 
 def extract_attributes(file, is_spam):
-	print file
-	print is_spam
+	first_line = file.readline()
+	# get the content after the first colon
+	colon_index = first_line.find(":")
+	subject = first_line[colon_index + 1:]
+	# removing the final newline
+	subject = subject.replace("\n", "")
+	# removing spaces
+	subject = subject.strip()
+	return EmailAttributes(subject)
 
 args = sys.argv
+args_treatment(args)
 input_file_path = args[INDEX_INPUT_FILE_PATH]
 is_spam = args[INDEX_IS_SPAM]
 
-args_treatment(sys.argv)
 input_file = open(input_file_path, "r")
-extract_attributes(input_file, is_spam)
+attributes = extract_attributes(input_file, is_spam)
 input_file.close()
+print attributes
+
