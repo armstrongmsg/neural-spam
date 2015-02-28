@@ -17,7 +17,7 @@ class EmailAttributes:
 		return self.subject
 
 	def __str__(self):
-		return "" + self.subject
+		return "\"" + self.subject + "\""
 
 def args_treatment(args):
 	if len(args) != 3:
