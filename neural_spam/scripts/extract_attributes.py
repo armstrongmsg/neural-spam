@@ -11,10 +11,15 @@ import os.path
 # constants
 INDEX_INPUT_FILE_PATH = 1
 INDEX_IS_SPAM = 2
-IS_SPAM = 1
-IS_NOT_SPAM = -1
+IS_SPAM = "1"
+IS_NOT_SPAM = "-1"
+
+
+# TODO to be removed
+"""
 LEARNIG_RATE = 1
 THRESHOLD = 0 #it might be in other file, because, this value will change on neural network trainning
+"""
 
 # SPANS TRIGGER WORDS
 # From website: http://blog.hubspot.com/blog/tabid/6307/bid/30684/The-Ultimate-List-of-Email-SPAM-Trigger-Words.aspx
@@ -39,25 +44,38 @@ AVOID_SPAM_WORDS_NOUNS = []
 SPAM_TRIGGER_WORDS = [AVOID_SPAM_WORDS_COMMERCE,AVOID_SPAM_WORDS_PERSONAL,AVOID_SPAM_WORDS_EMPLOYMENTS,AVOID_SPAM_WORDS_FINANCIAL_GENERAL,AVOID_SPAM_WORDS_FINANCIAL_BUSINESS,AVOID_SPAM_WORDS_FINANCIAL_PERSONAL,AVOID_SPAM_WORDS_GENERAL,AVOID_SPAM_WORDS_GREETINGS,AVOID_SPAM_WORDS_MARKETING,AVOID_SPAM_WORDS_MEDICAL,AVOID_SPAM_WORDS_NUMBERS,AVOID_SPAM_WORDS_OFFERS,AVOID_SPAM_WORDS_CALL_TO_ACTION,AVOID_SPAM_WORDS_FREE,AVOID_SPAM_WORDS_DESCRIPTION,AVOID_SPAM_WORDS_SENSE_OF_URGENCY,AVOID_SPAM_WORDS_NOUNS]
 
 
-
+# TODO to be removed
+"""
 #it might be in other file, because, these values will change on neural network trainning
 # it might be an array or class
 WEI_SUBJECT_LENGTH = 1
 WEI_SUBJECT_TRIGGER_WORDS = 1
-
-
-#
+"""
 
 class EmailAttributes:
+	def get_number_of_spam_words_occurrences(self, string):
+		occurrences = 0
+		for avoid_word_list in SPAM_TRIGGER_WORDS:
+			for avoid_word in avoid_word_list:
+				if avoid_word in string.lower():
+					occurrences += 1
+		return occurrences
+
 	def __init__(self, subject):
 		self.subject = subject
+		self.number_of_spam_words_in_subject = self.get_number_of_spam_words_occurrences(subject)
 
 	def get_subject(self):
 		return self.subject
 
-	def __str__(self):
-		return "\"" + self.subject + "\""
+	def get_number_of_spam_words_in_subject(self):
+		return self.number_of_spam_words_in_subject
 
+	def __str__(self):
+		return str(self.get_number_of_spam_words_in_subject())
+
+# TODO to be removed
+"""
 # class used to neural network trainning
 class Email:
 	# attributes: instance of EmailAttributes
@@ -69,7 +87,7 @@ class Email:
 		return attributes
 	def get_spam(self):
 		return spam
-
+"""
 
 def args_treatment(args):
 	if len(args) != 3:
@@ -97,6 +115,8 @@ def extract_attributes(file, is_spam):
 	subject = subject.strip()
 	return EmailAttributes(subject)
 
+# TODO to be removed
+"""
 #Emails: Email Array
 def learning(emails):
 	for (email in emails):
@@ -137,7 +157,7 @@ def learning(emails):
 			THRESHOLD = THRESHOLD + ((LEARNING_RATE*(-1))*(espected-descovered))
 		
 
-
+"""
 
 args = sys.argv
 args_treatment(args)
