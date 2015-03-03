@@ -21,7 +21,7 @@ THRESHOLD = 0 #it might be in other file, because, this value will change on neu
 AVOID_SPAM_WORDS_COMMERCE = ["as seen on","buy","buy direct","buying judgments","clearance","order","order status","orders shipped by","shopper"]
 AVOID_SPAM_WORDS_PERSONAL = ["dig up dirt on friends","meet singles","score with babes"]
 AVOID_SPAM_WORDS_EMPLOYMENTS = ["additional income","be your own boss","compete for your business","double your","earn $","earn extra cash","earn per week","expect to earn","extra income","home based","home employment","homebased business","income from home","make $","make money","money making","online biz opportunity","online degree","opportunity","potential earnings","university diplomas","while you sleep","work at home","work from home"]
-AVOID_SPAM_WORDS_FINANCIAL_GENERAL = []
+AVOID_SPAM_WORDS_FINANCIAL_GENERAL = ["$$$","affordable","bargain","beneficiary","best price","big bucks","cash","cash bonus","cashcashcash","cents on the dollar","cheap","check","claims","collect","compare rates","cost","credit","credit bureaus","discount","earn","easy terms","f r e e","free","fast cash","for just $","hidden assets","hidden charges","income","incredible deal","insurance","investment","loans","lowest price","million dollars","money","money back","mortgage","mortgage rates","no cost","no fees","one hundred percent free","only $","pennies a day","price","profits","pure profit","quote","refinance","save $","save big money","save up to","serious cash","subject to credit","they keep your money","no refund!","unsecured credit","unsecured debt","us dollars","why pay more?"]
 AVOID_SPAM_WORDS_FINANCIAL_BUSINESS = []
 AVOID_SPAM_WORDS_FINANCIAL_PERSONAL = []
 AVOID_SPAM_WORDS_GENERAL = []
@@ -107,7 +107,7 @@ def learning(emails):
 			w1 = len(email.get_attribute().get_subject()) * WEI_SUBJECT_LENGTH
 			avoid = 0;
 			for (avoid_word in SPAM_TRIGGER_WORDS):
-				if (email.get_attribute().get_subject().lower() in avoid_word):
+				if (avoid_word in email.get_attribute().get_subject().lower()):
 					avoid = 1;
 			w2 = avoid * WEI_SUBJECT_TRIGGER_WORDS
 			
