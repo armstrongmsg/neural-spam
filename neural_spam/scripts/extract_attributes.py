@@ -61,9 +61,27 @@ class EmailAttributes:
 					occurrences += 1
 		return occurrences
 
-	def __init__(self, subject):
+	def calculate_number_of_spam_words_in_body(self, body):
+		occurrences = 0
+		for body_line in body:
+			occurrences += self.get_number_of_spam_words_occurrences(body_line)
+		return occurrences
+
+	def get_total_number_of_words(self, subject, body):
+		words_subject = len(subject.split())
+		words_body = 0
+
+		for body_line in body:
+			words_body += len(body_line.split())
+
+		return words_subject + words_body
+
+	def __init__(self, subject, body):
 		self.subject = subject
+		self.body = body
 		self.number_of_spam_words_in_subject = self.get_number_of_spam_words_occurrences(subject)
+		self.number_of_spam_words_in_body = self.calculate_number_of_spam_words_in_body(body)
+		self.total_number_of_words = self.get_total_number_of_words(subject, body)
 
 	def get_subject(self):
 		return self.subject
@@ -71,8 +89,14 @@ class EmailAttributes:
 	def get_number_of_spam_words_in_subject(self):
 		return self.number_of_spam_words_in_subject
 
+	def get_total_number_of_words_in_email(self):
+		return self.total_number_of_words
+
+	def get_number_of_spam_words_in_body(self):
+		return self.number_of_spam_words_in_body	
+
 	def __str__(self):
-		return str(self.get_number_of_spam_words_in_subject())
+		return str(self.get_number_of_spam_words_in_subject()) + ", " + str(self.get_total_number_of_words_in_email()) + ", " + str(self.get_number_of_spam_words_in_body())
 
 # TODO to be removed
 """
@@ -113,7 +137,9 @@ def extract_attributes(file, is_spam):
 	subject = subject.replace("\n", "")
 	# removing spaces
 	subject = subject.strip()
-	return EmailAttributes(subject)
+
+	body = file.readlines()
+	return EmailAttributes(subject, body)
 
 # TODO to be removed
 """
