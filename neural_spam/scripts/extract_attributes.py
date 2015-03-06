@@ -159,13 +159,15 @@ def learning(emails):
 
 """
 
-args = sys.argv
-args_treatment(args)
-input_file_path = args[INDEX_INPUT_FILE_PATH]
-is_spam = args[INDEX_IS_SPAM]
+def get_attributes(input_file_path, is_spam):
+	input_file = open(input_file_path, "r")
+	attributes = extract_attributes(input_file, is_spam)
+	input_file.close()
+	return attributes
 
-input_file = open(input_file_path, "r")
-attributes = extract_attributes(input_file, is_spam)
-input_file.close()
-print attributes
-
+if __name__ == "__main__":
+	args = sys.argv
+	args_treatment(args)
+	input_file_path = args[INDEX_INPUT_FILE_PATH]
+	is_spam = args[INDEX_IS_SPAM]
+	print get_attributes(input_file_path, is_spam)
