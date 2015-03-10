@@ -18,11 +18,13 @@ ham_files = os.listdir(ham_directory)
 
 output = open(output_file, "w")
 
-#Definição de atributos no ARFF
+#Definicao de atributos no ARFF
 output.write("@RELATION spam\n")
 output.write("@ATTRIBUTE spam trigger subject\n")
+output.write("@ATTRIBUTE body size\n")
 output.write("@ATTRIBUTE spam trigger body\n")
-output.write("@ATTRIBUTE body size\n\n")
+output.write("\n")
+
 output.write("@DATA\n")
 
 for file_name in ham_files:
