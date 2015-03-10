@@ -23,6 +23,7 @@ output.write("@RELATION spam\n")
 output.write("@ATTRIBUTE spam trigger subject\n")
 output.write("@ATTRIBUTE spam trigger body\n")
 output.write("@ATTRIBUTE body size\n\n")
+output.write("@DATA\n")
 
 for file_name in ham_files:
 	# constroi o absolute path do arquivo
