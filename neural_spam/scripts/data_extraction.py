@@ -18,6 +18,17 @@ ham_files = os.listdir(ham_directory)
 
 output = open(output_file, "w")
 
+#Definição de atributos no ARFF
+output.write("@RELATION spam \n")
+output.write()
+output.write()
+@RELATION iris
+
+   @ATTRIBUTE sepallength  NUMERIC
+   @ATTRIBUTE sepalwidth   NUMERIC
+   @ATTRIBUTE petallength  NUMERIC
+   @ATTRIBUTE petalwidth   NUMERIC
+   @ATTRIBUTE class        {Iris-setosa,Iris-versicolor,Iris-virginica}
 for file_name in ham_files:
 	# constroi o absolute path do arquivo
 	file_name_full_path = ham_directory + os.sep + file_name
