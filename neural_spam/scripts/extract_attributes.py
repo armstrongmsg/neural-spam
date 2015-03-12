@@ -75,6 +75,15 @@ class EmailAttributes:
 			words_body += len(body_line.split())
 
 		return words_subject + words_body
+	
+	def get_total_of_receivers(self, body):
+		receivers = body[0]
+		total_of_receivers = receivers.count("@")
+		
+		if(total_of_receivers) == 0:
+			total_of_receivers = 1
+		
+		return total_of_receivers
 
 	def __init__(self, subject, body):
 		self.subject = subject
@@ -82,6 +91,7 @@ class EmailAttributes:
 		self.number_of_spam_words_in_subject = self.get_number_of_spam_words_occurrences(subject)
 		self.number_of_spam_words_in_body = self.calculate_number_of_spam_words_in_body(body)
 		self.total_number_of_words = self.get_total_number_of_words(subject, body)
+		self.total_of_receivers = self.get_total_of_receivers(body)
 
 	def get_subject(self):
 		return self.subject
@@ -93,10 +103,13 @@ class EmailAttributes:
 		return self.total_number_of_words
 
 	def get_number_of_spam_words_in_body(self):
-		return self.number_of_spam_words_in_body	
+		return self.number_of_spam_words_in_body
+
+	def get_total_of_receivers_in_body(self):
+		return self.total_of_receivers
 
 	def __str__(self):
-		return str(self.get_number_of_spam_words_in_subject()) + ", " + str(self.get_total_number_of_words_in_email()) + ", " + str(self.get_number_of_spam_words_in_body())
+		return str(self.get_number_of_spam_words_in_subject()) + ", " + str(self.get_total_number_of_words_in_email()) + ", " + str(self.get_number_of_spam_words_in_body()) + ", " + str(self.get_total_of_receivers_in_body())
 
 # TODO to be removed
 """

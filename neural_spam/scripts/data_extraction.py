@@ -23,6 +23,7 @@ output.write("@RELATION spam\n")
 output.write("@ATTRIBUTE spam trigger subject\n")
 output.write("@ATTRIBUTE body size\n")
 output.write("@ATTRIBUTE spam trigger body\n")
+output.write("@ATTRIBUTE total of receivers\n")
 output.write("\n")
 
 output.write("@DATA\n")
