@@ -87,6 +87,14 @@ class EmailAttributes:
 		
 		return total_of_receivers
 
+	def calculate_contains_links(self, body):
+		link_patterns = ["http", "http:", "https", "https:"]
+		for line in body:
+			for pattern in link_patterns:
+				if pattern in line:
+					return True
+		return False
+
 	def __init__(self, subject, body):
 		self.subject = subject
 		self.body = body
@@ -94,6 +102,7 @@ class EmailAttributes:
 		self.number_of_spam_words_in_body = self.calculate_number_of_spam_words_in_body(body)
 		self.total_number_of_words = self.get_total_number_of_words(subject, body)
 		self.total_of_receivers = self.get_total_of_receivers(body)
+		self.contains_links = self.calculate_contains_links(body)
 
 	def get_subject(self):
 		return self.subject
@@ -109,9 +118,22 @@ class EmailAttributes:
 
 	def get_total_of_receivers_in_body(self):
 		return self.total_of_receivers
+	
+	def get_contains_links(self):
+		return self.contains_links
 
 	def __str__(self):
-		return str(self.get_number_of_spam_words_in_subject()) + ", " + str(self.get_total_number_of_words_in_email()) + ", " + str(self.get_number_of_spam_words_in_body()) + ", " + str(self.get_total_of_receivers_in_body())
+		result_string = ""
+		result_string += str(self.get_number_of_spam_words_in_subject()) 
+		result_string += ", " + str(self.get_total_number_of_words_in_email())
+		result_string += ", " + str(self.get_number_of_spam_words_in_body())
+		result_string += ", " + str(self.get_total_of_receivers_in_body())
+		if self.get_contains_links():
+			result_string += ", 1"
+		else:
+			result_string += ", 0"
+
+		return result_string
 
 # TODO to be removed
 """
