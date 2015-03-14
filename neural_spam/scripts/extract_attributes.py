@@ -77,11 +77,13 @@ class EmailAttributes:
 		return words_subject + words_body
 	
 	def get_total_of_receivers(self, body):
-		receivers = body[0]
-		total_of_receivers = receivers.count("@")
+		total_of_receivers = 1
+		if len(body) > 0:
+			receivers = body[0]
+			total_of_receivers = receivers.count("@")
 		
-		if(total_of_receivers) == 0:
-			total_of_receivers = 1
+			if(total_of_receivers) == 0:
+				total_of_receivers = 1
 		
 		return total_of_receivers
 
