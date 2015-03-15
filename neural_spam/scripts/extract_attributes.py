@@ -14,13 +14,6 @@ INDEX_IS_SPAM = 2
 IS_SPAM = "1"
 IS_NOT_SPAM = "-1"
 
-
-# TODO to be removed
-"""
-LEARNIG_RATE = 1
-THRESHOLD = 0 #it might be in other file, because, this value will change on neural network trainning
-"""
-
 # SPANS TRIGGER WORDS
 # From website: http://blog.hubspot.com/blog/tabid/6307/bid/30684/The-Ultimate-List-of-Email-SPAM-Trigger-Words.aspx
 AVOID_SPAM_WORDS_COMMERCE = ["as seen on","buy","buy direct","buying judgments","clearance","order","order status","orders shipped by","shopper"]
@@ -42,15 +35,6 @@ AVOID_SPAM_WORDS_SENSE_OF_URGENCY = ["acess","act now","apply now","apply online
 AVOID_SPAM_WORDS_NOUNS = ["addresses on cd","beverage","bonus","brand new pager","cable converter","casino","celebrity","copy dvds","laser printer","legal","luxury car","new domain extensions","phone","rolex","stainless steel"]
 
 SPAM_TRIGGER_WORDS = [AVOID_SPAM_WORDS_COMMERCE,AVOID_SPAM_WORDS_PERSONAL,AVOID_SPAM_WORDS_EMPLOYMENTS,AVOID_SPAM_WORDS_FINANCIAL_GENERAL,AVOID_SPAM_WORDS_FINANCIAL_BUSINESS,AVOID_SPAM_WORDS_FINANCIAL_PERSONAL,AVOID_SPAM_WORDS_GENERAL,AVOID_SPAM_WORDS_GREETINGS,AVOID_SPAM_WORDS_MARKETING,AVOID_SPAM_WORDS_MEDICAL,AVOID_SPAM_WORDS_NUMBERS,AVOID_SPAM_WORDS_OFFERS,AVOID_SPAM_WORDS_CALL_TO_ACTION,AVOID_SPAM_WORDS_FREE,AVOID_SPAM_WORDS_DESCRIPTION,AVOID_SPAM_WORDS_SENSE_OF_URGENCY,AVOID_SPAM_WORDS_NOUNS]
-
-
-# TODO to be removed
-"""
-#it might be in other file, because, these values will change on neural network trainning
-# it might be an array or class
-WEI_SUBJECT_LENGTH = 1
-WEI_SUBJECT_TRIGGER_WORDS = 1
-"""
 
 class EmailAttributes:
 	def get_number_of_spam_words_occurrences(self, string):
@@ -135,21 +119,6 @@ class EmailAttributes:
 
 		return result_string
 
-# TODO to be removed
-"""
-# class used to neural network trainning
-class Email:
-	# attributes: instance of EmailAttributes
-	# spam: boolean if is a spam or a ham
-	def __init__(self, attributes, spam):
-		self.attributes = attributes
-		self.spam = spam
-	def get_attributes(self):
-		return attributes
-	def get_spam(self):
-		return spam
-"""
-
 def args_treatment(args):
 	if len(args) != 3:
 		print "Numero incorreto de argumentos!!!"
@@ -177,50 +146,6 @@ def extract_attributes(file, is_spam):
 
 	body = file.readlines()
 	return EmailAttributes(subject, body)
-
-# TODO to be removed
-"""
-#Emails: Email Array
-def learning(emails):
-	for (email in emails):
-		while (True):
-			#Checking parameters
-			#it might be a while or for here, checking all attributes and weights, but, I don't know how to do it now...
-			# w1,w2,w3... are local weigths
-			w1 = len(email.get_attribute().get_subject()) * WEI_SUBJECT_LENGTH
-			avoid = 0;
-			for (avoid_word in SPAM_TRIGGER_WORDS):
-				if (avoid_word in email.get_attribute().get_subject().lower()):
-					avoid = 1;
-			w2 = avoid * WEI_SUBJECT_TRIGGER_WORDS
-			
-			# sum all weights
-			w = w1+w2
-			
-			#check threshold
-			espected = 0
-			descovered = 0
-			if (w > THRESHOLD):
-				if(email.get_spam()):
-					break
-				else:
-					espected = IS_SPAM
-					descovered = IS_NOT_SPAM
-			else:
-				if not(email.get_spam()):
-					break
-				else:
-					espected = IS_NOT_SPAM
-					descovered = IS_SPAM
-			
-			# weight adjustment
-			# do not change
-			WEI_SUBJECT_LENGTH = WEI_SUBJECT_LENGTH + ((LEARNIG_RATE*len(email.get_attribute().get_subject()))*(espected-descovered))
-			WEI_SUBJECT_TRIGGER_WORDS = WEI_SUBJECT_TRIGGER_WORDS + ((LEARNING_RATE*avoid)*(espected-descovered))
-			THRESHOLD = THRESHOLD + ((LEARNING_RATE*(-1))*(espected-descovered))
-		
-
-"""
 
 def get_attributes(input_file_path, is_spam):
 	input_file = open(input_file_path, "r")
