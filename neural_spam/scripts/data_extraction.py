@@ -3,8 +3,11 @@ import sys
 from subprocess import call
 from extract_attributes import *
 
-HAM = "-1"
-SPAM = "1"
+#HAM = "-1"
+#SPAM = "1"
+
+HAM = "ham"
+SPAM = "spam"
 
 # primeiro argumento: diretorio com os e-mails ham
 ham_directory = sys.argv[1]
@@ -25,7 +28,7 @@ output.write("@ATTRIBUTE 'body size' numeric\n")
 output.write("@ATTRIBUTE 'spam trigger body' numeric\n")
 output.write("@ATTRIBUTE 'total of receivers' numeric\n")
 output.write("@ATTRIBUTE 'contains links' numeric\n")
-output.write("@ATTRIBUTE 'class' numeric\n")
+output.write("@ATTRIBUTE 'class' {spam,ham}\n")
 output.write("\n")
 
 output.write("@DATA\n")
